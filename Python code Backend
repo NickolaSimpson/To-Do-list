@@ -1,0 +1,64 @@
+def display_menu():
+    # Display the menu options for the to-do list
+    print("\nTo-Do List Menu:")
+    print("1. View To-Do List")
+    print("2. Add a Task")
+    print("3. Mark a Task as Completed")
+    print("4. Remove Completed Tasks")
+    print("5. Exit")
+
+def view_tasks(tasks):
+    # Display the current list of tasks
+    if not tasks:  # Check if the list is empty
+        print("Your to-do list is empty.")
+    else:
+        print("Your To-Do List:")
+        for index, task in enumerate(tasks):  # Loop through tasks and display each one with its index
+            print(f"{index + 1}. {task}")
+
+def add_task(tasks):
+    # Add a new task to the to-do list
+    task = input("Enter a new task: ")  # Get task input from the user
+    tasks.append(task)  # Add the task to the list
+    print("Task added!")
+
+def mark_task_completed(tasks):
+    # Mark a task as completed
+    view_tasks(tasks)  # Show the list of tasks so the user can choose one
+    if tasks:  # Only proceed if the list is not empty
+        try:
+            task_number = int(input("Enter the number of the task to mark as completed: "))  # Get the task number
+            if 1 <= task_number <= len(tasks):  # Check if the number is valid
+                tasks[task_number - 1] += " (completed)"  # Mark the selected task as completed
+                print("Task marked as completed!")
+            else:
+                print("Invalid task number.")  # Display an error if the number is not valid
+        except ValueError:
+            print("Please enter a valid number.")  # Handle non-numeric input
+
+def remove_completed_tasks(tasks):
+    # Remove tasks that are marked as completed
+    tasks[:] = [task for task in tasks if "(completed)" not in task]  # Keep only tasks that are not completed
+    print("Completed tasks removed!")
+
+def main():
+    tasks = []  # Initialize an empty list to store tasks
+    while True:  # Infinite loop to keep the program running
+        display_menu()  # Show the menu options
+        choice = input("Choose an option (1-5): ")  # Get user's choice
+        if choice == '1':
+            view_tasks(tasks)  # View the current list of tasks
+        elif choice == '2':
+            add_task(tasks)  # Add a new task to the list
+        elif choice == '3':
+            mark_task_completed(tasks)  # Mark a task as completed
+        elif choice == '4':
+            remove_completed_tasks(tasks)  # Remove completed tasks from the list
+        elif choice == '5':
+            print("Goodbye!")  # Exit the program
+            break  # Break the loop to end the program
+        else:
+            print("Invalid choice. Please choose a number between 1 and 5.")  # Handle invalid menu choices
+
+if __name__ == "__main__":
+    main()  # Run the main function to start the program
